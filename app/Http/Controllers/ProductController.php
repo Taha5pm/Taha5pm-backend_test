@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use App\Models\supplier;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isNull;
 
 class ProductController extends Controller
 {
@@ -44,9 +47,17 @@ class ProductController extends Controller
             'quantity'        => 'required',
             'price'           => 'required',
         ]);
-        $check = product::select('id')->where(['supplier_id', 'equal', $request->supplier_id], ['model', 'like', '%' . $request->model . '%']);
-        if ($check != null) {
-            $new = product::find($check);
+        $check = product::all()->where('supplier_id', 'equal', $request->supplier_id)
+            ->where('model', 'equal',  $request->model);
+        $id = $check->map(function ($check) {
+            return $check->only(['id']);
+        });
+        $c = $id->value('id');
+
+
+        if ($c != null) {
+
+            $new = product::find($id->value('id'));
             if ($new) {
                 $new->quantity = strval(intval($new->quantity) + intval($request->quantity));
                 $new->save();
