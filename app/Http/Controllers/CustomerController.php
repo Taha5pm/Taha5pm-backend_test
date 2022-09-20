@@ -14,7 +14,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers=customer::all();
+        return view('pages.table_list',['customers'=>$customers]);
     }
 
     /**
@@ -35,7 +36,15 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = $request->validate([
+            'name'     => 'required',
+        ]);
+        $customer=new customer();
+        $customer->name=$request->name;
+        $customer->save();
+
+        $customers=customer::all();
+        return redirect()->route('customer',['customers'=>$customers]);
     }
 
     /**

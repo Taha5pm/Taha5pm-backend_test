@@ -13,16 +13,12 @@ use Illuminate\Support\Facades\Auth ;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {
@@ -56,8 +52,18 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
-	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
+
+    Route::get('Products', ['as' => 'profile.product', 'uses' => 'App\Http\Controllers\ProductController@index']);
+    Route::get('Suppliers', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\SupplierController@index']);
+    Route::get('Customers', ['as' => 'customer', 'uses' => 'App\Http\Controllers\CustomerController@index']);
+    Route::put('Suppliers/store',['as' => 'supplier.store', 'uses' => 'App\Http\Controllers\SupplierController@store']);
+    Route::put('Products/store',['as' => 'product.store', 'uses' => 'App\Http\Controllers\ProductController@store']);
+    Route::put('Customers/store',['as' => 'customer.store', 'uses' => 'App\Http\Controllers\CustomerController@store']);
+    Route::get('Orders',['as' => 'order', 'uses' => 'App\Http\Controllers\OrderController@index']);
+    Route::put('Orders/store',['as' => 'order.store', 'uses' => 'App\Http\Controllers\OrderController@store']);
+
+
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 

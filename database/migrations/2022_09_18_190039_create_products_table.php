@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('model');
             $table->double('price');
             $table->foreignId('supplier_id');
+            $table->integer('quantity');
             $table->timestamps();
             $table->softDeletes();
         });

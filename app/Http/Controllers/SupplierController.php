@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\supplier;
+use Illuminate\Contracts\Auth\SupportsBasicAuth;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -14,7 +15,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $suppliers=supplier::all();
+        return view('profile.edit',['suppliers'=> $suppliers]);
     }
 
     /**
@@ -35,7 +37,19 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+  $validation = $request->validate([
+            'name'     => 'required',
+            'email'    => 'required',
+        'phonenumber'  => 'required',
+        ]);
+        $supplier=new supplier();
+        $supplier->name=$request->name;
+        $supplier->phonenumber=$request->phonenumber;
+        $supplier->email=$request->email;
+        $supplier->save();
+
+        $suppliers=supplier::all();
+        return redirect()->route('profile.edit',['suppliers'=> $suppliers]);
     }
 
     /**

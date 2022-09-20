@@ -1,103 +1,92 @@
-@extends('layouts.app', ['activePage' => 'typography', 'titlePage' => __('Typography')])
+@extends('layouts.app', ['activePage' => 'typography', 'titlePage' => __('Make Order')])
 
 @section('content')
-<div class="content">
-  <div class="container-fluid">
-    <div class="card">
-      <div class="card-header card-header-primary">
-        <h4 class="card-title">Material Dashboard Heading</h4>
-        <p class="card-category">Created using Roboto Font Family</p>
-      </div>
-      <div class="card-body">
-        <div id="typography">
-          <div class="card-title">
-            <h2>Typography</h2>
-          </div>
-          <div class="row">
-            <div class="tim-typo">
-              <h1>
-                <span class="tim-note">Header 1</span>The Life of Material Dashboard </h1>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <form method="post" action="{{ route('order.store') }}" class="form-horizontal">
+                        @csrf
+                        @method('put')
+
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title ">Details</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <label class="col-sm-2 ">{{ __('Customer') }}</label>
+                                    <div class="col-sm-10">
+                                        <div class="form-group">
+                                            <select class="form-control" name="customer_id" id="customer_id" type="text"
+                                                placeholder="{{ __('Choose customer') }}" value="" required>
+                                                @foreach ($customers as $customer)
+                                                    <option value="{{ $customer->id }}">
+                                                        {{ $customer->name }}
+                                                    </option>
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class=" text-primary">
+                                            <th>
+                                            </th>
+                                            <th>
+                                                Model
+                                            </th>
+                                            <th>
+                                                Unit Price
+                                            </th>
+                                            <th>
+                                                Quantity
+                                            </th>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($products as $product)
+                                                <tr>
+                                                    <td>
+                                                        <input type="radio" name="product_id" id="product_id[]"
+                                                            value="{{ $product->id }}">
+                                                    </td>
+                                                    <td>
+                                                        {{ $product->model }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $product->price }} $
+                                                    </td>
+                                                    <td>
+                                                        {{ $product->quantity }}
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <label>{{ __('Enter quantity') }}</label>
+
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="quantity" id="quantity" required=true>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer ml-auto mr-auto">
+                                <button type="submit" class="btn btn-primary">{{ __('purchase') }}</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
             </div>
-            <div class="tim-typo">
-              <h2>
-                <span class="tim-note">Header 2</span>The Life of Material Dashboard</h2>
-            </div>
-            <div class="tim-typo">
-              <h3>
-                <span class="tim-note">Header 3</span>The Life of Material Dashboard</h3>
-            </div>
-            <div class="tim-typo">
-              <h4>
-                <span class="tim-note">Header 4</span>The Life of Material Dashboard</h4>
-            </div>
-            <div class="tim-typo">
-              <h5>
-                <span class="tim-note">Header 5</span>The Life of Material Dashboard</h5>
-            </div>
-            <div class="tim-typo">
-              <h6>
-                <span class="tim-note">Header 6</span>The Life of Material Dashboard</h6>
-            </div>
-            <div class="tim-typo">
-              <p>
-                <span class="tim-note">Paragraph</span>
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.</p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Quote</span>
-              <blockquote class="blockquote">
-                <p>
-                  I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.
-                </p>
-                <small>
-                  Kanye West, Musician
-                </small>
-              </blockquote>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Muted Text</span>
-              <p class="text-muted">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers...
-              </p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Primary Text</span>
-              <p class="text-primary">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Info Text</span>
-              <p class="text-info">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Success Text</span>
-              <p class="text-success">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Warning Text</span>
-              <p class="text-warning">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers...
-              </p>
-            </div>
-            <div class="tim-typo">
-              <span class="tim-note">Danger Text</span>
-              <p class="text-danger">
-                I will be the leader of a company that ends up being worth billions of dollars, because I got the answers... </p>
-            </div>
-            <div class="tim-typo">
-              <h2>
-                <span class="tim-note">Small Tag</span>
-                Header with small subtitle
-                <br>
-                <small>Use "small" tag for the headers</small>
-              </h2>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
 @endsection

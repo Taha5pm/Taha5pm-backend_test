@@ -33,7 +33,7 @@
                                 <span class="sidebar-normal">{{ __('Suppliers') }} </span>
                             </a>
                         </li>
-                        <li class="nav-item{{ $activePage == 'user-management' ? ' active' : '' }}">
+                        <li class="nav-item{{ $activePage == 'profile_product' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('profile.product') }}">
                                 <span class="sidebar-mini"> </span>
                                 <span class="sidebar-normal"> {{ __('Products') }} </span>
@@ -43,13 +43,13 @@
                 </div>
             </li>
             <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('table') }}">
+                <a class="nav-link" href="{{ route('customer') }}">
                     <i class="material-icons">content_paste</i>
                     <p>{{ __('Customers') }}</p>
                 </a>
             </li>
             <li class="nav-item{{ $activePage == 'typography' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('typography') }}">
+                <a class="nav-link" href="{{ route('order') }}">
                     <i class="material-icons">library_books</i>
                     <p>{{ __('Make order') }}</p>
                 </a>

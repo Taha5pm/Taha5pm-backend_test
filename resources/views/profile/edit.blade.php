@@ -5,21 +5,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <form method="post" action="{{ route('profile.update') }}" autocomplete="off" class="form-horizontal">
-                        @csrf
-                        @method('put')
-                    </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <form method="post" action="{{ route('profile.password') }}" class="form-horizontal">
+                    <form method="post" action="{{ route('supplier.store') }}" class="form-horizontal">
                         @csrf
                         @method('put')
 
                         <div class="card ">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title">{{ __('Supplier') }}</h4>
+                                <h4 class="card-title">{{ __('Add Supplier') }}</h4>
                             </div>
                             <div class="card-body ">
                                 @if (session('status_password'))
@@ -36,8 +28,7 @@
                                     </div>
                                 @endif
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label"
-                                        for="input-current-password">{{ __('name') }}</label>
+                                    <label class="col-sm-2 col-form-label" for="input-name">{{ __('name') }}</label>
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             <input class="form-control" name="name" id="name" type="text"
@@ -46,7 +37,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label" for="input-password">{{ __('Email') }}</label>
+                                    <label class="col-sm-2 col-form-label" for="input-email">{{ __('Email') }}</label>
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             <input class="form-control" name="email" id="email" type="email"
@@ -57,7 +48,7 @@
                                 </div>
                                 <div class="row">
                                     <label class="col-sm-2 col-form-label"
-                                        for="input-password-confirmation">{{ __('Phone number') }}</label>
+                                        for="input-phonenumber">{{ __('Phone number') }}</label>
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             <input class="form-control" name="phonenumber" id="phonenumber" type="text"
@@ -71,6 +62,55 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-primary">
+                            <h4 class="card-title ">Suppliers</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            ID
+                                        </th>
+                                        <th>
+                                            Name
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Phone number
+                                        </th>
+
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($suppliers as $supplier)
+                                            <tr>
+                                                <td>
+                                                    {{ $supplier->id }}
+                                                </td>
+                                                <td>
+                                                    {{ $supplier->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $supplier->email }}
+                                                </td>
+                                                <td>
+                                                    {{ $supplier->phonenumber }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

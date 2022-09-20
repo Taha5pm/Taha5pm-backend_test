@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\order;
+use App\Models\customer;
+use App\Models\product;
+use App\Models\item;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,7 +17,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $customers = customer::all();
+        $products = product::all();
+        return view('pages.typography', ['customers' => $customers, 'products' => $products]);
     }
 
     /**
@@ -35,7 +40,35 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $order = new order();
+        $item = new item();
+
+        $order->customer_id = $request->customer_id;
+        $order->order_date = date('Y-m-d H:i:s');
+        $order->save();
+
+        $order_id = $order::all()->last();
+        $order_id = $order_id['id'];
+
+        $item->product_id = $request->product_id;
+        $item->order_id = $order_id;
+        $item->quantity = $request->quantity;
+
+        $unit_price = product::all()->where('id', 'equal', $request->product_id);
+        $unit_price = $unit_price->value('price');
+
+        $item->total_price = strval(intval($request->quantity) * intval($unit_price));
+
+        $newquan = product::find($request->product_id);
+        if ($newquan) {
+            if (intval($newquan->quantity) >= intval($request->quantity)) {
+                $newquan->quantity = strval(intval($newquan->quantity) - intval($request->quantity));
+                $newquan->save();
+                $item->save();
+            }
+        }
+
+        return redirect()->route('order');
     }
 
     /**

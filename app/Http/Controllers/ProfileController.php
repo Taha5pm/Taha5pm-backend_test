@@ -18,6 +18,13 @@ class ProfileController extends Controller
         return view('profile.edit');
     }
 
+
+    public function product()
+    {
+        return view('profile.product');
+    }
+
+
     /**
      * Update the profile
      *
@@ -44,3 +51,4 @@ class ProfileController extends Controller
         return back()->withStatusPassword(__('Password successfully updated.'));
     }
 }
+?>
