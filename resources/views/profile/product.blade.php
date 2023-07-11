@@ -34,7 +34,7 @@
                                             <select class="form-control" name="supplier_id" id="supplier_id" type="text"
                                                 placeholder="{{ __('Choose supplier') }}" value="" required>
                                                 @foreach ($suppliers as $supplier)
-                                                    <option value="{{ $supplier->id }}">
+                                                    <option value="{{ $supplier->s_serial_number }}">
                                                         {{ $supplier->name }}
                                                     </option>
                                                 @endforeach

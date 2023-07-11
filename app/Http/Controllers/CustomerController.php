@@ -15,7 +15,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customers=customer::all();
-        return view('pages.table_list',['customers'=>$customers]);
+        return view('Admin.customer',['customers'=>$customers]);
     }
 
     /**
@@ -38,13 +38,17 @@ class CustomerController extends Controller
     {
         $validation = $request->validate([
             'name'     => 'required',
+            'email'    => 'required',
+            'password' => 'required',
         ]);
         $customer=new customer();
         $customer->name=$request->name;
+        $customer->email=$request->email;
+        $customer->password=$request->password;
         $customer->save();
 
         $customers=customer::all();
-        return redirect()->route('customer',['customers'=>$customers]);
+        return redirect()->route('admin.customer',['customers'=>$customers]);
     }
 
     /**

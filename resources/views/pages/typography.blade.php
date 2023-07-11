@@ -21,7 +21,7 @@
                                             <select class="form-control" name="customer_id" id="customer_id" type="text"
                                                 placeholder="{{ __('Choose customer') }}" value="" required>
                                                 @foreach ($customers as $customer)
-                                                    <option value="{{ $customer->id }}">
+                                                    <option value="{{ $customer->customer_id }}">
                                                         {{ $customer->name }}
                                                     </option>
                                                 @endforeach
@@ -50,7 +50,7 @@
                                                 <tr>
                                                     <td>
                                                         <input type="radio" name="product_id" id="product_id[]"
-                                                            value="{{ $product->id }}">
+                                                            value="{{ $product->p_serial_number }}">
                                                     </td>
                                                     <td>
                                                         {{ $product->model }}

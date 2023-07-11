@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class order extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'order_id';
     protected $fillable = ['customer_id','order_date'];
     public function customers()
     {
-        return $this->belongsTo(customer::class,'customer_id');
+        return $this->belongsTo(customer::class);
     }
 
     public function items()

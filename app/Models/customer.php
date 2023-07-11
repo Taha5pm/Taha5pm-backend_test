@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class customer extends Model
 {
+    protected $primaryKey = 'customer_id';
     use HasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['name','email','password'];
     public function orders()
     {
         return $this->hasMany(order::class);

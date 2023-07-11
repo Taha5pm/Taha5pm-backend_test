@@ -8,16 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class product extends Model
 {
     use HasFactory;
-    protected $fillable = ['supplier_id','model','quantity','price'];
+    protected $primaryKey = 'p_serial_number';
+    protected $fillable = ['s_serial_number','p_serial_number','name','description','model','quantity','price'];
 
-   public function suppliers()
+   public function supplier_suppliers()
     {
-        return $this->belongsTo(supplier::class,'supplier_id');
-    }
-
-
-    public function items()
-    {
-        return $this->hasMany(item::class);
+        return $this->hasMany(supplier_product::class);
     }
 }

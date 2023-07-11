@@ -6,18 +6,20 @@
       Tip 2: you can also add an image using data-image tag
   -->
     <div class="logo">
-        <a href="https://creative-tim.com/" class="simple-text logo-normal">
+        <a href="{{ route('home') }}" class="simple-text logo-normal">
             {{ __('WAREHOUSE') }}
         </a>
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('home') }}">
-                    <i class="material-icons">dashboard</i>
-                    <p>{{ __('Dashboard') }}</p>
-                </a>
-            </li>
+            @if (Auth::user()->role == null)
+                <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
+                    <a class="nav-link" href="{{ route('home') }}">
+                        <i class="material-icons">dashboard</i>
+                        <p>{{ __('Dashboard') }}</p>
+                    </a>
+                </li>
+            @endif
             <li class="nav-item {{ $activePage == 'profile' || $activePage == 'user-management' ? ' active' : '' }}">
                 <a class="nav-link" data-toggle="collapse" href="#laravelExample" aria-expanded="true">
                     <i><img style="width:25px" src="{{ asset('material') }}/img/laravel.svg"></i>
@@ -25,16 +27,22 @@
                         <b class="caret"></b>
                     </p>
                 </a>
+
                 <div class="collapse show" id="laravelExample">
+
                     <ul class="nav">
-                        <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('profile.edit') }}">
-                                <span class="sidebar-mini"> </span>
-                                <span class="sidebar-normal">{{ __('Suppliers') }} </span>
-                            </a>
-                        </li>
+                        @if (Auth::user()->role == null)
+                            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
+                                <a class="nav-link" href="{{ route('admin.supplier') }}">
+                                    <span class="sidebar-mini"> </span>
+                                    <span class="sidebar-normal">{{ __('Suppliers') }} </span>
+                                </a>
+                            </li>
+                        @endif
+
+
                         <li class="nav-item{{ $activePage == 'profile_product' ? ' active' : '' }}">
-                            <a class="nav-link" href="{{ route('profile.product') }}">
+                            <a class="nav-link" href="{{ route('admin.product') }}">
                                 <span class="sidebar-mini"> </span>
                                 <span class="sidebar-normal"> {{ __('Products') }} </span>
                             </a>
@@ -42,18 +50,22 @@
                     </ul>
                 </div>
             </li>
-            <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('customer') }}">
-                    <i class="material-icons">content_paste</i>
-                    <p>{{ __('Customers') }}</p>
-                </a>
-            </li>
-            <li class="nav-item{{ $activePage == 'typography' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('order') }}">
-                    <i class="material-icons">library_books</i>
-                    <p>{{ __('Make order') }}</p>
-                </a>
-            </li>
+            @if (Auth::user()->role == null)
+                <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.customer') }}">
+                        <i class="material-icons">content_paste</i>
+                        <p>{{ __('Customers') }}</p>
+                    </a>
+                </li>
+
+                <li class="nav-item{{ $activePage == 'typography' ? ' active' : '' }}">
+                    <a class="nav-link" href="{{ route('admin.order') }}">
+                        <i class="material-icons">library_books</i>
+                        <p>{{ __('Make order') }}</p>
+                    </a>
+                </li>
+            @endif
+
         </ul>
     </div>
 </div>

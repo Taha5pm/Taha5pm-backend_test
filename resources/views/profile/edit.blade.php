@@ -92,7 +92,7 @@
                                         @foreach ($suppliers as $supplier)
                                             <tr>
                                                 <td>
-                                                    {{ $supplier->id }}
+                                                    {{ $supplier->s_serial_number }}
                                                 </td>
                                                 <td>
                                                     {{ $supplier->name }}

@@ -8,15 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class item extends Model
 {
     use HasFactory;
-    protected $fillable = ['product_id','order_id','quantity','total_price'];
+    protected $primaryKey = 'item_id';
+    protected $fillable = ['supplier_product_id','order_id','quantity','total_price'];
 
     public function orders()
     {
-        return $this->belongsTo(order::class,'order_id');
+        return $this->belongsTo(order::class);
     }
 
-    public function products()
+    public function supplier_products()
     {
-        return $this->belongsTo(product::class,'product_id');
+        return $this->belongsTo(supplier_product::class);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use App\Models\supplier;
+use App\Models\supplier_product;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
@@ -20,7 +21,8 @@ class ProductController extends Controller
     {
         $suppliers = supplier::all();
         $products = product::all();
-        return view('profile.product', ['suppliers' => $suppliers, 'products' => $products]);
+        $supp_prod =supplier_product::all();
+        return view('Admin.product', ['suppliers' => $suppliers, 'products' => $products,'supp_prods'=>$supp_prod]);
     }
 
     /**
@@ -42,41 +44,53 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validation = $request->validate([
-            'supplier_id'     => 'required',
-            'model'           => 'required',
-            'quantity'        => 'required',
-            'price'           => 'required',
+            's_serial_number'     => 'required',
+            'p_serial_number'     => 'required',
+            'name'                => 'required',
+            'description'         => 'required',
+            'model'               => 'required',
+            'quantity'            => 'required',
+            'price'               => 'required',
         ]);
-        $check = product::all()->where('supplier_id', 'equal', $request->supplier_id)
-            ->where('model', 'equal',  $request->model);
-        $id = $check->map(function ($check) {
-            return $check->only(['id']);
-        });
-        $c = $id->value('id');
 
+            $check=product::all()->where('p_serial_number', 'equal', $request->p_serial_number);
+            $id = $check->map(function ($check)
+            {
+            return $check->only(['p_serial_number']);
+            });
 
-        if ($c != null) {
-
-            $new = product::find($id->value('id'));
-            if ($new) {
-                $new->quantity = strval(intval($new->quantity) + intval($request->quantity));
-                $new->save();
-            }
-        } else {
+            $c=$id->value('p_serial_number');
+            if($c == null)
+            {
             $product = new product();
-            $product->supplier_id = $request->supplier_id;
+            $product->p_serial_number=$request->p_serial_number;
+            $product->name = $request->name;
+            $product->description = $request->description;
             $product->model = $request->model;
-            $product->quantity = $request->quantity;
             $product->price = $request->price;
             $product->save();
-        }
+
+            $supp_prod=new supplier_product();
+            $supp_prod->s_serial_number=$request->s_serial_number;
+            $supp_prod->p_serial_number=$request->p_serial_number;
+            $supp_prod->quantity=$request->quantity;
+            $supp_prod->save();
+            }
+            else{
+            $supp_prod=new supplier_product();
+            $supp_prod->s_serial_number=$request->s_serial_number;
+            $supp_prod->p_serial_number=$request->p_serial_number;
+            $supp_prod->quantity=$request->quantity;
+            $supp_prod->save();
+            }
 
 
         $products = product::all();
         $suppliers = supplier::all();
+        $supp_prod =supplier_product::all();
 
-        return redirect()->route('profile.product', ['suppliers' => $suppliers, 'products' => $products]);
-    }
+        return redirect()->route('admin.product', ['suppliers' => $suppliers, 'products' => $products,'supp_prods'=>$supp_prod]);
+        }
 
     /**
      * Display the specified resource.
@@ -84,6 +98,7 @@ class ProductController extends Controller
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
      */
+
     public function show(product $product)
     {
         //
