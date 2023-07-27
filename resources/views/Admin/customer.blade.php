@@ -37,6 +37,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <label class="col-sm-2 col-form-label" for="input-name">{{ __('Phone_Number') }}</label>
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <input class="form-control" name="phone_number" id="phone_number" type="number"
+                                                placeholder="{{ __('enter phone number') }}" value="" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <label class="col-sm-2 col-form-label" for="input-name">{{ __('Email') }}</label>
                                     <div class="col-sm-7">
                                         <div class="form-group">
@@ -90,19 +99,25 @@
                                         <th>
                                             Email
                                         </th>
+                                        <th>
+                                            Phone Number
+                                        </th>
 
                                     </thead>
                                     <tbody>
-                                        @foreach ($customers as $customer)
+                                        @foreach ($users as $customer)
                                             <tr>
                                                 <td>
-                                                    {{ $customer->customer_id }}
+                                                    {{ $customer->id }}
                                                 </td>
                                                 <td>
                                                     {{ $customer->name }}
                                                 </td>
                                                 <td>
                                                     {{ $customer->email }}
+                                                </td>
+                                                <td>
+                                                    {{ $customer->phone_number }}
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -9,10 +9,5 @@ class product extends Model
 {
     use HasFactory;
     protected $primaryKey = 'p_serial_number';
-    protected $fillable = ['s_serial_number','p_serial_number','name','description','model','quantity','price'];
-
-   public function supplier_suppliers()
-    {
-        return $this->hasMany(supplier_product::class);
-    }
+    protected $fillable = ['p_serial_number', 'name', 'description', 'model', 'quantity', 'price'];
 }

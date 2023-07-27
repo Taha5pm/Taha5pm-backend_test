@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\customer;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -14,8 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers=customer::all();
-        return view('Admin.customer',['customers'=>$customers]);
+        $users = User::all()->where('role', 'customer');
+        return view('Admin.customer', ['users' => $users]);
     }
 
     /**
@@ -40,15 +41,19 @@ class CustomerController extends Controller
             'name'     => 'required',
             'email'    => 'required',
             'password' => 'required',
+            'phone_number' => 'required'
         ]);
-        $customer=new customer();
-        $customer->name=$request->name;
-        $customer->email=$request->email;
-        $customer->password=$request->password;
-        $customer->save();
+        $user = new User();
+        $user->name = $request->name;
+        $user->phone_number = $request->phone_number;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->role = 'customer';
 
-        $customers=customer::all();
-        return redirect()->route('admin.customer',['customers'=>$customers]);
+        $user->save();
+
+        $users = User::all()->where('role', 'customer');
+        return view('Admin.customer', ['users' => $users]);
     }
 
     /**

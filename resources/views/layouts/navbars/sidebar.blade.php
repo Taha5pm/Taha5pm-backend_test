@@ -6,15 +6,15 @@
       Tip 2: you can also add an image using data-image tag
   -->
     <div class="logo">
-        <a href="{{ route('home') }}" class="simple-text logo-normal">
+        <a href="{{ route('admin.home') }}" class="simple-text logo-normal">
             {{ __('WAREHOUSE') }}
         </a>
     </div>
     <div class="sidebar-wrapper">
         <ul class="nav">
-            @if (Auth::user()->role == null)
+            @if (Auth::user()->role == 'admin')
                 <li class="nav-item{{ $activePage == 'dashboard' ? ' active' : '' }}">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="{{ route('admin.home') }}">
                         <i class="material-icons">dashboard</i>
                         <p>{{ __('Dashboard') }}</p>
                     </a>
@@ -31,15 +31,6 @@
                 <div class="collapse show" id="laravelExample">
 
                     <ul class="nav">
-                        @if (Auth::user()->role == null)
-                            <li class="nav-item{{ $activePage == 'profile' ? ' active' : '' }}">
-                                <a class="nav-link" href="{{ route('admin.supplier') }}">
-                                    <span class="sidebar-mini"> </span>
-                                    <span class="sidebar-normal">{{ __('Suppliers') }} </span>
-                                </a>
-                            </li>
-                        @endif
-
 
                         <li class="nav-item{{ $activePage == 'profile_product' ? ' active' : '' }}">
                             <a class="nav-link" href="{{ route('admin.product') }}">
@@ -50,7 +41,7 @@
                     </ul>
                 </div>
             </li>
-            @if (Auth::user()->role == null)
+            @if (Auth::user()->role == 'admin')
                 <li class="nav-item{{ $activePage == 'table' ? ' active' : '' }}">
                     <a class="nav-link" href="{{ route('admin.customer') }}">
                         <i class="material-icons">content_paste</i>

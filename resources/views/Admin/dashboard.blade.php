@@ -3,7 +3,7 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-            @if (Auth::user()->role == null)
+            @if (Auth::user()->role == 'admin')
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <div class="card">
@@ -15,39 +15,22 @@
                                     <thead class="text-warning">
                                         <th>Customer Name</th>
                                         <th>Product Name</th>
-                                        <th>Product Model</th>
-                                        <th>Quantity</th>
-                                        <th>Total Price</th>
                                         <th>Date</th>
                                     </thead>
                                     <tbody>
-                                        @foreach ($items as $item)
+                                        @foreach ($orders as $order)
                                             <tr>
                                                 <td>
-                                                    {{ $customers->where('customer_id', 'equal', $orders->where('order_id', 'equal', $item->order_id)->value('customer_id'))->value('name') }}
+                                                    {{ $users->where('id', $order->user_id)->value('name') }}
                                                 </td>
                                                 <td>
-                                                    {{ $products->where(
-                                                            'p_serial_number',
-                                                            'equal',
-                                                            $supp_prods->where('supplier_product_id', 'equal', $item->supplier_product_id)->value('p_serial_number'),
-                                                        )->value('name') }}
+                                                    {{ $products->where('p_serial_number', $order->product_id)->value('name') }}
                                                 </td>
                                                 <td>
-                                                    {{ $products->where(
-                                                            'p_serial_number',
-                                                            'equal',
-                                                            $supp_prods->where('supplier_product_id', 'equal', $item->supplier_product_id)->value('p_serial_number'),
-                                                        )->value('model') }}
+                                                    {{ $products->where('p_serial_number', $order->product_id)->value('model') }}
                                                 </td>
                                                 <td>
-                                                    {{ $item->quantity }}
-                                                </td>
-                                                <td>
-                                                    {{ $item->total_price }} $
-                                                </td>
-                                                <td>
-                                                    {{ $item->created_at }}
+                                                    {{ $order->created_at }}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -65,16 +48,10 @@
                                 <div class="card-icon">
                                     <i class="material-icons">content_copy</i>
                                 </div>
-                                <p class="card-category">Total Selling</p>
-                                <h3 class="card-title">{{ $supplier_total_price }}
+                                <p class="card-category">Total Orders</p>
+                                <h3 class="card-title">{{ count($orders) }}
                                     <small>$</small>
                                 </h3>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="material-icons">warning</i>
-                                    <h5>{{ $supplier_total_quantity }} Sold Products</h5>
-                                </div>
                             </div>
                         </div>
                     </div>

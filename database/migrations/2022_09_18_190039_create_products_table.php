@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('model');
             $table->text('description');
             $table->double('price');
+            $table->integer('quantity');
             $table->timestamps();
             $table->softDeletes();
         });

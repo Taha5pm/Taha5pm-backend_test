@@ -28,40 +28,13 @@
                                     </div>
                                 @endif
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label" for="input_supplier">{{ __('Supplier') }}</label>
-                                    <div class="col-sm-7">
-                                        <div class="form-group">
-                                            @if (Auth::user()->role == null)
-                                                <select class="form-control" name="s_serial_number" id="s_serial_number"
-                                                    type="text" placeholder="{{ __('Choose supplier') }}" value=""
-                                                    required>
-                                                    @foreach ($suppliers as $supplier)
-                                                        <option value="{{ $supplier->s_serial_number }}">
-                                                            {{ $supplier->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            @else
-                                                <select class="form-control" name="s_serial_number" id="s_serial_number"
-                                                    type="text" placeholder="{{ __('Choose supplier') }}" value=""
-                                                    required>
-                                                    <option value="{{ Auth::user()->s_serial_number }}">
-                                                        {{ Auth::user()->name }}
-                                                    </option>
-                                                </select>
-                                            @endif
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <label class="col-sm-2 col-form-label"
-                                        for="input-model">{{ __('Serial Number') }}</label>
+                                        for="input-model">{{ __('Product Serial Number') }}</label>
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             <input class="form-control" name="p_serial_number" id="p_serial_number"
-                                                type="text" placeholder="{{ __('Enter serial number') }}" value=""
-                                                required />
+                                                type="text" placeholder="{{ __('Enter product serial number') }}"
+                                                value="" required />
 
                                         </div>
                                     </div>
@@ -87,8 +60,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label"
-                                        for="input-model">{{ __('Description') }}</label>
+                                    <label class="col-sm-2 col-form-label" for="input-model">{{ __('Description') }}</label>
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             <input class="form-control" name="description" id="description" type="text"
@@ -157,18 +129,6 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($products as $product)
-                                            @php
-                                                $checker = false;
-                                                if (
-                                                    $supp_prods
-                                                        ->where('s_serial_number', 'equal', Auth::user()->s_serial_number)
-                                                        ->where('p_serial_number', 'equal', $product->p_serial_number)
-                                                        ->value('p_serial_number') != null &&
-                                                    Auth::user()->role != null
-                                                ) {
-                                                    $checker = true;
-                                                }
-                                            @endphp
                                             <tr>
                                                 <td>
                                                     {{ $product->p_serial_number }}
@@ -186,12 +146,7 @@
 
                                                 </td>
                                                 <td>
-                                                    @if (!$checker)
-                                                        {{ $supp_prods->where('p_serial_number', 'equal', $product->p_serial_number)->sum('quantity') }}
-                                                    @else
-                                                        {{ $supp_prods->where('s_serial_number', 'equal', Auth::user()->s_serial_number)->where('p_serial_number', 'equal', $product->p_serial_number)->sum('quantity') }}
-                                                    @endif
-
+                                                    {{ $product->quantity }}
                                                 </td>
                                                 <td>
                                                     {{ $product->price }} $

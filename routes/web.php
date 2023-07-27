@@ -14,15 +14,14 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/',[App\Http\Controllers\Website\HomeController::class, 'index'])->name('web_home');
-Route::get('Product/{p_serial_number}/Details',[App\Http\Controllers\Website\HomeController::class, 'show'])->name('pro_det');
+Route::get('/', [App\Http\Controllers\Website\HomeController::class, 'index'])->name('web_home');
+Route::get('Product/{p_serial_number}/Details', [App\Http\Controllers\Website\HomeController::class, 'show'])->name('pro_det');
 
 
-Route::get('/admin/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
 
 
 Route::group(['middleware' => 'auth:admin', 'prefix' => '/admin', 'as' => 'admin.'], function () {
+    Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
     Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
     Route::get('Products', ['as' => 'product', 'uses' => 'App\Http\Controllers\ProductController@index']);
@@ -41,3 +40,5 @@ Route::group(['middleware' => 'auth:admin', 'prefix' => '/admin', 'as' => 'admin
 
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
+
+Auth::routes();

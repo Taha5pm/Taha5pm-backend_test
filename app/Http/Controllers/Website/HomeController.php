@@ -17,22 +17,19 @@ class HomeController extends Controller
 
     public function index()
     {
-        $supp_prods=supplier_product::all();
-        $products=product::all();
-        return view('Frontend.index',['supp_prods' => $supp_prods,'products' => $products]);
+        $products = product::all();
+        return view('Frontend.index', ['products' => $products]);
     }
 
-     /**
+    /**
      * Show the application dashboard.
      *
      * @param int $p_serial_number
      */
     public function show($p_serial_number)
     {
-        $product=product::where('p_serial_number','=',$p_serial_number)->get();
+        $product = product::where('p_serial_number', '=', $p_serial_number)->get();
 
-        $q_sum=supplier_product::all()->where('p_serial_number','=',$p_serial_number)->sum('quantity');
-        return view('Frontend.prod_details',['product'=>$product,'q_sum' => $q_sum]);
+        return view('Frontend.prod_details', ['product' => $product]);
     }
 }
-

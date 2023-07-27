@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Warehouse &mdash; Free Website Template by Free-Template.co</title>
+    <title>Warehouse &mdash; Details</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -138,7 +138,7 @@
                                                     {{ $product->value('price') }} $
                                                 </td>
                                                 <td>
-                                                    {{ $q_sum }}
+                                                    {{ $product->value('quantity') }}
                                                 </td>
 
                                             </tr>

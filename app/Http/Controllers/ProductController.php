@@ -19,10 +19,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $suppliers = supplier::all();
         $products = product::all();
-        $supp_prod =supplier_product::all();
-        return view('Admin.product', ['suppliers' => $suppliers, 'products' => $products,'supp_prods'=>$supp_prod]);
+        return view('Admin.product', ['products' => $products]);
     }
 
     /**
@@ -44,53 +42,23 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validation = $request->validate([
-            's_serial_number'     => 'required',
-            'p_serial_number'     => 'required',
             'name'                => 'required',
             'description'         => 'required',
             'model'               => 'required',
             'quantity'            => 'required',
             'price'               => 'required',
         ]);
-
-            $check=product::all()->where('p_serial_number', 'equal', $request->p_serial_number);
-            $id = $check->map(function ($check)
-            {
-            return $check->only(['p_serial_number']);
-            });
-
-            $c=$id->value('p_serial_number');
-            if($c == null)
-            {
-            $product = new product();
-            $product->p_serial_number=$request->p_serial_number;
-            $product->name = $request->name;
-            $product->description = $request->description;
-            $product->model = $request->model;
-            $product->price = $request->price;
-            $product->save();
-
-            $supp_prod=new supplier_product();
-            $supp_prod->s_serial_number=$request->s_serial_number;
-            $supp_prod->p_serial_number=$request->p_serial_number;
-            $supp_prod->quantity=$request->quantity;
-            $supp_prod->save();
-            }
-            else{
-            $supp_prod=new supplier_product();
-            $supp_prod->s_serial_number=$request->s_serial_number;
-            $supp_prod->p_serial_number=$request->p_serial_number;
-            $supp_prod->quantity=$request->quantity;
-            $supp_prod->save();
-            }
-
+        $product = new product();
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->model = $request->model;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->save();
 
         $products = product::all();
-        $suppliers = supplier::all();
-        $supp_prod =supplier_product::all();
-
-        return redirect()->route('admin.product', ['suppliers' => $suppliers, 'products' => $products,'supp_prods'=>$supp_prod]);
-        }
+        return view('Admin.product', ['products' => $products]);
+    }
 
     /**
      * Display the specified resource.

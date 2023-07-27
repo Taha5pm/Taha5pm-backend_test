@@ -38,7 +38,7 @@ return [
     'guards' => [
         'admin' => [
             'driver' => 'session',
-            'provider' => 'suppliers',
+            'provider' => 'users',
         ],
     ],
 
@@ -59,17 +59,18 @@ return [
     |
     */
 
-    'providers' => [
-        'suppliers' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\supplier::class,
-        ],
+    //     'suppliers' => [
+    //         'driver' => 'eloquent',
+    //         'model' => App\Models\supplier::class,
+    //     ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+    'providers' => [
+        'users' => [
+            'driver' => 'database',
+            'table' => 'users',
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -87,8 +88,8 @@ return [
     */
 
     'passwords' => [
-        'suppliers' => [
-            'provider' => 'suppliers',
+        'users' => [
+            'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

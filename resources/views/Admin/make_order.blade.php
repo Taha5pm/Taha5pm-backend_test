@@ -18,11 +18,11 @@
                                     <label class="col-sm-2 ">{{ __('Customer') }}</label>
                                     <div class="col-sm-10">
                                         <div class="form-group">
-                                            <select class="form-control" name="customer_id" id="customer_id" type="text"
+                                            <select class="form-control" name="user_id" id="user_id" type="text"
                                                 placeholder="{{ __('Choose customer') }}" value="" required>
-                                                @foreach ($customers as $customer)
-                                                    <option value="{{ $customer->customer_id }}">
-                                                        {{ $customer->name }}
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}">
+                                                        {{ $user->name }}
                                                     </option>
                                                 @endforeach
 
@@ -46,10 +46,10 @@
                                                 Description
                                             </th>
                                             <th>
-                                                Unit Price
+                                                Quantity
                                             </th>
                                             <th>
-                                                Quantity
+                                                Unit Price
                                             </th>
                                         </thead>
                                         <tbody>
@@ -69,10 +69,10 @@
                                                         {{ $product->description }}
                                                     </td>
                                                     <td>
-                                                        {{ $product->price }} $
+                                                        {{ $product->quantity }}
                                                     </td>
                                                     <td>
-                                                        {{ $supp_prods->where('p_serial_number', 'equal', $product->p_serial_number)->sum('quantity') }}
+                                                        {{ $product->price }} $
                                                     </td>
 
                                                 </tr>
@@ -93,7 +93,7 @@
                                 </div>
                             </div>
                             <div class="card-footer ml-auto mr-auto">
-                                <button type="submit" class="btn btn-primary">{{ __('purchase') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Assign') }}</button>
                             </div>
                         </div>
                     </form>

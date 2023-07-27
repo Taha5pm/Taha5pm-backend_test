@@ -1,4 +1,4 @@
-@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'register', 'title' => __('Material Dashboard')])
+@extends('layouts.app', ['class' => 'off-canvas-sidebar', 'activePage' => 'register', 'title' => __('Warehouse')])
 
 @section('content')
     <div class="container" style="height: auto;">
@@ -9,7 +9,7 @@
 
                     <div class="card card-login card-hidden mb-3">
                         <div class="card-header card-header-primary text-center">
-                            <h4 class="card-title"><strong>{{ __('Register') }}</strong></h4>
+                            <h4 class="card-title"><strong>{{ __('Admin Registration') }}</strong></h4>
                             <div class="social-line">
                                 <a href="#pablo" class="btn btn-just-icon btn-link btn-white">
                                     <i class="fa fa-facebook-square"></i>
@@ -38,6 +38,24 @@
                                     <div id="name-error" class="error text-danger pl-3" for="name"
                                         style="display: block;">
                                         <strong>{{ $errors->first('name') }}</strong>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="bmd-form-group{{ $errors->has('phone_number') ? ' has-danger' : '' }} mt-3">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">phone</i>
+                                        </span>
+                                    </div>
+                                    <input type="number" name="phone_number" class="form-control"
+                                        placeholder="{{ __('phone_number...') }}" value="{{ old('phone_number') }}"
+                                        required>
+                                </div>
+                                @if ($errors->has('phone_number'))
+                                    <div id="phone_number-error" class="error text-danger pl-3" for="phone_number"
+                                        style="display: block;">
+                                        <strong>{{ $errors->first('phone_number') }}</strong>
                                     </div>
                                 @endif
                             </div>
