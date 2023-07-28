@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +18,29 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 Route::get('/', [App\Http\Controllers\Website\HomeController::class, 'index'])->name('web_home');
 Route::get('Product/{p_serial_number}/Details', [App\Http\Controllers\Website\HomeController::class, 'show'])->name('pro_det');
 
 
 
 
-Route::group(['middleware' => 'auth:admin', 'prefix' => '/admin', 'as' => 'admin.'], function () {
+Route::group(['middleware' => ['auth:admin', 'verified'], 'prefix' => '/admin', 'as' => 'admin.'], function () {
     Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
     Route::get('profile/edit', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
